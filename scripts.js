@@ -1,17 +1,46 @@
-var  page = document.getElementById("page");
-var button = document.getElementById("btn");
+var button = document.getElementById("generate-btn");
+var quote = document.getElementById("quote");
+var author = document.getElementById("author");
 
 button.addEventListener("click", myFunction);
 
-const hexa = ["a", "b", "c", "d", "e", "f", "0","1","2", "3", "4","5", "6", "7","8", "9"];
+let newArray = [
+    {
+        "quote": "Humor is richly rewarding to the person who employs it.It has some value in gaining and holding attention. But it has no persuasive value at all",
+        "name": "John Kenneth Galbraith",
+    },
 
-let hexadecimal = "#";
-function myFunction(){
-    
-    for(var i = 1; i <= 6; i++){
-        let random = Math.floor(Math.random()* hexa.length);
-        hexadecimal += hexa[random];
+    {
+        "quote": "Life is like a landscape. You live in the midst of it but can describe it only from the vantage point of distance.",
+        "name": "Charles Lindbergh",
+    },
+
+    {
+        "quote":"Life is too short and sweet to be spent by cribbing and complaining about things. Here are some random quotes about the most wonderful gift that we've got",
+        "name":"Life",
+    },
+
+    {
+        "quote": "A critic is someone who never actually goes to the battle, yet who afterwards comes out shooting the wounded.",
+        "name": "Tyne Daly",
+    },
+
+    {
+        "quote": "God save me from my friends. I can protect myself from my enemies.",
+        "name": "Claude Louis Hector De Villars",
+    },
+
+    {
+        "quote": "The price of anything is the amount of life you exchange for it.",
+        "name": "David Thoreau"
     }
-    page.style.backgroundColor = hexadecimal;
-    hexadecimal = "#";
+    
+    
+];
+
+function myFunction(){
+    let random = Math.floor(Math.random()* newArray.length);
+    quote.innerHTML = newArray[random].quote;
+    author.innerHTML =  newArray[random].name;
+
 }

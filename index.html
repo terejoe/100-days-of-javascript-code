@@ -11,10 +11,21 @@
     <title>JavaScript Tutorial</title>
   </head>
 
-  <body id = "page">
-    <div  class  = "center">
-      <button type = "button" class = "btn btn-outline-secondary" id = "btn"> Click Me!</button>
+  <body>
+    <div class="conainer">
+      <div class="row max-height align-items-center">
+        <div class="col-11 mx-auto col-md-6 quote-container p-5">
+          <button class="btn-outline-primary text-capitalize my-4 d-block mx-auto" id="generate-btn">generate quote</button>
+    
+          <h3 class="text-muted"><span class="quote-icon mr-3"><i class="fas fa-quote-left fa-3x"></i></span><span id="quote">Lorem
+                ipsum dolor sit amet consectetur, adipisicing elit. Tenetur sint iste optio placeat dolor labore, reprehenderit
+                ipsum aspernatur blanditiis maiores.
+              </span></i></span></h3>
+          <h5 class="text-right text-capitalize author" id = "author">-<span class="quote-author ml-3">author</span></h5>
+        </div>
+      </div>
     </div>
+   
 
     <!-- Optional JavaScript; choose one of the two! -->
     <script src = "scripts.js"></script>
