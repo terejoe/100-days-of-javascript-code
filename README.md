@@ -1,2 +1,3 @@
 # 100-days-of-javascript-code
-I am building 100 different projects on javascript
+Day-5
+A program that increses and decreases by the click of a button.

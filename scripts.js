@@ -1,11 +1,17 @@
-var message = document.getElementById("message");
-var submitBtn = document.getElementById("submitBtn");
-var deliver = document.getElementById("deliver");
+var count = document.getElementById("count").innerHTML;
+var lowercount = document.getElementById("down");
+var addcount = document.getElementById("up");
 
-submitBtn.addEventListener("click", myFunction);
+lowercount.addEventListener("click", myFunction);
+addcount.addEventListener("click", myFunction);
 
 function myFunction(event){
     event.preventDefault();
-    var message = document.getElementById("message").value;
-    document.getElementById("deliver").innerText = message;
+    if(event.target.id == "down"){
+        count--
+    }else {
+        count++
+    } 
+    document.getElementById("count").innerHTML = count;
 }
+
