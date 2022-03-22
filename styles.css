@@ -1,25 +1,34 @@
 .max-height {
-    min-height: 100vh;
+  min-height: 100vh;
 }
+:root {
+  --lightBlue: #95b8d1;
+  --mainwhite: #f5f5f5;
+  --mainBlack: #333333;
+}
+
 body {
-    background: #b09e99;
+  background: var(--lightBlue);
 }
-.quote-container {
-    background: rgba(255, 255, 255, 0.5);
+.message-container {
+  background: var(--mainwhite);
 }
-#generate-btn {
-    color: white !important;
-    background: #64b6ac !important;
-    border-color: #64b6ac !important;
-    cursor: pointer;
-    font-size: 1.5rem;
-    padding: 0.5rem 1rem;
+.message-content {
+  color: var(--lightBlue);
 }
-#generate-btn:hover {
-    background: #b09e99 !important;
-    border-color: #b09e99 !important;
-    color: #333333 !important;
+#submitBtn {
+  background: var(--lightBlue);
+  color: var(--mainwhite);
 }
-.author {
-    color: #64b6ac;
+#submitBtn:hover {
+  color: var(--lightBlue);
+  color: var(--mainBlack);
+}
+
+.feedback {
+  display: none;
+}
+
+.show {
+  display: block;
 }
