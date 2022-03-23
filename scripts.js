@@ -1,17 +1,22 @@
-var count = document.getElementById("count").innerHTML;
-var lowercount = document.getElementById("down");
-var addcount = document.getElementById("up");
+var image = document.getElementById("image");
+var left = document.getElementById("left");
+var right = document.getElementById("right");
 
-lowercount.addEventListener("click", myFunction);
-addcount.addEventListener("click", myFunction);
+left.addEventListener("click", myFunction);
+right.addEventListener("click", myFunction);
 
-function myFunction(event){
-    event.preventDefault();
-    if(event.target.id == "down"){
-        count--
-    }else {
-        count++
-    } 
-    document.getElementById("count").innerHTML = count;
+var pictures = [
+    "https://raw.githubusercontent.com/JS-Beginners/background-image-slider-project/main/img/contBcg-0.jpeg",
+    "https://raw.githubusercontent.com/JS-Beginners/background-image-slider-project/main/img/contBcg-1.jpeg",
+    "https://raw.githubusercontent.com/JS-Beginners/background-image-slider-project/main/img/contBcg-2.jpeg",
+    "https://raw.githubusercontent.com/JS-Beginners/background-image-slider-project/main/img/contBcg-3.jpeg",
+    "https://raw.githubusercontent.com/JS-Beginners/background-image-slider-project/main/img/contBcg-4.jpeg"
+];
+
+
+function myFunction(){
+    var index = Math.floor(Math.random() * pictures.length);
+    image.style.background = `url(${pictures[index]})`;
 }
+
 
