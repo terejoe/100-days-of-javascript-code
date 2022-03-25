@@ -1,53 +1,62 @@
-:root {
-  --mainWhite: #f2fdff;
-  --mainBlue: #3e92cc;
+.max-height{
+ min-height: 100vh;
+ background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)) ,url("https://raw.githubusercontent.com/JS-Beginners/background-image-slider-project/main/img/contBcg-1.jpeg")center/cover no-repeat fixed;
 }
-.max-height {
-  min-height: 100vh;
+.title-heading{
+ color:#f15025;
 }
-body {
-  background: var(--mainWhite);
+.title-subheading{
+ color: white;
 }
-.img-container {
-  min-height: 60vh;
-  background: url("https://raw.githubusercontent.com/JS-Beginners/background-image-slider-project/main/img/contBcg-4.jpeg") center/cover fixed no-repeat;
-  border: 0.5rem solid var(--mainBlue);
-  border-radius: 0.5rem;
-  position: relative;
+.customer-card{
+ background: transparent!important;
+ color:white;
+ border:0.05rem solid white;
+ padding-bottom: 1rem;
+ padding-left: 1rem;
+ padding-right: 1rem;
+ position: relative;
 }
-@media screen and (min-width: 768px) {
-  .img-container {
-    min-height: 80vh;
-  }
+.img-card{
+ border-radius: 50%;
+ margin-bottom: 1rem;
+ margin-top: -3rem;
 }
+.star-icon{
+ color: #f15025;
+}
+.quote-icon{
+ font-size: 2rem;
+ color: #f15025;
+}
+.prevBtn,.nextBtn{
+ font-size: 1.5rem;
+ padding: 0.1rem;
+ color:#f15025;
+ border:0.1rem solid #f15025;
+ display: inline-block;
+ position: absolute;
+ padding: 0.4rem;
+ border-radius: 50%;
+ transition: all 1s ease-in-out;
+}
+.prevBtn:hover{
+background: #f15025;
+color: white;
 
-.btn-left {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  background: var(--mainBlue);
-  color: var(--mainWhite) !important;
-  transform: translate(-50%, -50%);
-  border: 0.2rem solid var(--mainBlue);
-  font-size: 1.2rem;
 }
-.btn-left:hover {
-  border-color: var(--mainBlue);
-  background: var(--mainWhite);
-  color: var(--mainBlue) !important;
+.nextBtn:hover{
+background: #f15025;
+color: white;
+
 }
-.btn-right {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  background: var(--mainBlue);
-  color: var(--mainWhite) !important;
-  font-size: 1.2rem;
-  transform: translate(50%, -50%);
-  border: 0.2rem solid var(--mainBlue);
+.prevBtn{
+ top: 50%;
+ left: 0;
+ transform: translate(-120%,-50%);
 }
-.btn-right:hover {
-  border-color: var(--mainBlue);
-  background: var(--mainWhite);
-  color: var(--mainBlue) !important;
+.nextBtn{
+ top: 50%;
+ right: 0;
+ transform: translate(120%,-50%);
 }

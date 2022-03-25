@@ -1,3 +1,3 @@
 # 100-days-of-javascript-code
-Day-6
-A program that slides through images with just a click.
+Day-7
+A program that displays customers review with their faces and name.
