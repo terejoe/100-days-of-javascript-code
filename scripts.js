@@ -22,7 +22,7 @@ buttons.forEach((button)=>{
     })
 });
 
-// Filter Elements Buttons
+//Search Element
 const search = document.querySelector("#search-item");
 //const storeItems = document.querySelectorAll(".store-item");
 
