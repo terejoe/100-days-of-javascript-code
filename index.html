@@ -14,7 +14,6 @@
   </head>
 
   <body>
-    
     <!-- header -->
     <header>
       <!-- navbar  -->
@@ -64,10 +63,12 @@
           <div class="col-10 mx-auto banner text-center">
             <h1 class="text-capitalize">welcome to <strong class="banner-title ">grandma's</strong></h1>
             <a href="#store" class="btn banner-link text-uppercase my-2">explore</a>
-      
+    
           </div>
         </div>
       </div>
+            
+      <!--end of  banner  -->
     </header>
     <!-- header -->
     <!-- about us -->
@@ -136,7 +137,7 @@
         </div>
         <!--end of filter buttons -->
         <!-- store  items-->
-        <div class="row" id="store-items">
+        <div class="row" class="store-items" id="store-items">
           <!-- single item -->
           <div class="col-10 col-sm-6 col-lg-4 mx-auto my-3 store-item sweets" data-item="sweets">
             <div class="card ">
@@ -395,6 +396,8 @@
     
                 </div>
               </div>
+    
+    
             </div>
             <!-- end of card-->
           </div>
@@ -403,6 +406,20 @@
         </div>
     </section>
     <!--end of store items -->
+    
+    
+    <!-- modal-container -->
+    <div class="container-fluid ">
+      <div class="row lightbox-container align-items-center"id = "modal">
+        <div class="col-10 col-md-10 mx-auto text-right lightbox-holder">
+          <span class="lightbox-close"><i class="fas fa-window-close close"></i></span>
+          <div class="lightbox-item" id = "image"></div>
+          <span class="lightbox-control btnLeft"><i class="fas fa-caret-left"></i></span>
+          <span class="lightbox-control btnRight"><i class="fas fa-caret-right"></i></span>
+        </div>
+    
+      </div>
+    </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
     <script src = "scripts.js"></script>

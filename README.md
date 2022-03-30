@@ -1,3 +1,3 @@
 # 100-days-of-javascript-code
-Day-8
-A program that filters a section when clicked or typed.
+Day-9
+A program that pops up a modal box for a selected image and slides left or right through the images.

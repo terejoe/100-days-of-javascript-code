@@ -1,45 +1,68 @@
-// Filter Elements Buttons
-const buttons= document.querySelectorAll(".btn");
-const storeItems = document.querySelectorAll(".store-item");
+//Modal Box
+var storeItems = document.querySelectorAll(".store-item");
+var modal = document.getElementById("modal");
+var closeBtn = document.querySelector(".close");
 
-buttons.forEach((button)=>{
-    button.addEventListener("click", (event) => {
-        event.preventDefault();
-        const filter = event.target.dataset.filter;
-        storeItems.forEach((item) => {
-            if(filter === "all"){
-                item.style.display = "block";
-    
-            }else{
-                if(item.classList.contains(filter)){
-                    item.style.display = "block";
-                }else{
-                    item.style.display = "none";
-                }
-            }
+var images = document.querySelectorAll("img");
+var btnLeft = document.querySelector(".btnLeft");
+var btnRight = document.querySelector(".btnRight");
+var counter;
+var displayImg;
+var myArray = [];
 
-        });
+for (let i = 0; i < images.length; i++) {
+    myArray.push(images[i].src);
+}
+
+closeBtn.addEventListener("click", closeModal);
+
+btnLeft.addEventListener("click", myFunction);
+btnRight.addEventListener("click", myFunction);
+
+
+storeItems.forEach((item) =>{
+    // item.addEventListener("click",openModal(item));
+    item.addEventListener("click", function() {
+        openModal(item);
     })
-});
+})
 
-//Search Element
-const search = document.querySelector("#search-item");
-//const storeItems = document.querySelectorAll(".store-item");
-
-
-search.addEventListener("keyup", (event) => {
-    event.preventDefault();
-    const filter = search.value;
-    storeItems.forEach((item) => {
-        if (item.textContent.includes(filter)) {
-            item.style.display = "block";
-        } else {
-            item.style.display = "none";
+function openModal(item) {
+    modal.style.display = "block";
+    var img = item.childNodes[1].childNodes[1].childNodes[1].src;
+    
+    for(let i = 0; i < myArray.length; i++){
+        if(img === myArray[i]){
+            displayImg = myArray[i];
+            counter = i;
         }
-    });
-});
+    }
+    modal.childNodes[1].childNodes[3].style.background = `url(${displayImg})`;
+}
 
+function closeModal() {
+    modal.style.display = "none";
+}
 
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
-
-
+//Moving left and right
+function myFunction(e) {
+    if (e.target.classList.contains("fa-caret-right")) {
+        counter++;
+        if (counter > myArray.length-1) {
+            counter = 2;
+        }
+    } else if (e.target.classList.contains("fa-caret-left")) {
+        counter--;
+        if (counter < 2) {
+            counter = myArray.length -1;
+        }
+    }
+    modal.childNodes[1].childNodes[3].style.background = `url(${myArray[counter]})`;
+}
