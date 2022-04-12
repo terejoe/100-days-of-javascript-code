@@ -1,163 +1,128 @@
-//Error messages for invalid input
-let feedback = document.querySelector(".feedback");
+//Gathering values to populate my list
+// let itemInput = document.getElementById("itemInput").value;
+let addItem = document.getElementById("itemForm");
+let items = document.getElementById("items");
+let clearList = document.getElementById("clear-list");
 
-let inputBill = document.getElementById("input-bill").value;
-let inputUser = document.getElementById("input-users").value;
-let select = document.querySelector("select");
-
-//Loading phase
-let calculate = document.querySelector(".submitBtn");
-let form = document.querySelector("form");
-
-//Loading Icon
-let loader = document.querySelector(".loader");
-
-//Results
-let resultsContainer = document.querySelector('.results');
-let tipAmt= document.getElementById("tip-amount");
-let totalAmt = document.getElementById("total-amount");
-let personAmt = document.getElementById("person-amount");
-
-//Generating the options
-const services = [
-    {
-        "title":"Great-20%",
-        "value": 3,
-    },
-
-    {
-        "title": "Good-10%",
-        "value": 2,
-    },
-
-    {
-        "title": "Bad-2%",
-        "value": 1,
-    },
-
-]
-
-services.forEach((service) =>{
-    let option = document.createElement("option");
-    option.value = service.value;
-    option.textContent = service.title;
-
-    select.appendChild(option)
-
-});
-
-//Validating three of the inputs
-form.addEventListener("submit", validateInputs);
-
-function validateInputs(e){
-    let inputBill = document.getElementById("input-bill").value;
-    let inputUser = document.getElementById("input-users").value;
-
-    
-    let isValid = true;
-    if (inputBill ==="" || inputBill < 1) {
-        feedback.style.display = "block"
-        feedback.innerHTML = '<p>Bill amount cannot be blank</p>';
-        isValid = false;
+// task item class
+class Task {
+    constructor(task) {
+        this.task = task;
     }
-    
-    if (inputUser === "" || inputUser < 1) {
-        feedback.style.display = "block";
-        feedback.innerHTML += '<p>Number Of Users Must Be Greater Than Zero</p>';
-        isValid = false;
-    }
-    
-    if (select.value < 1) {
-        feedback.style.display = "block";
-        feedback.innerHTML += '<p>You Must Select A Service</p>';
-        isValid = false;
-    }
-
-    //Setting timer for two seconds before closing the errror message window
-
-    setTimeout(closeError,2000);
-
-    function closeError(){
-        feedback.innerHTML = "";
-        feedback.style.display = "none";
-    }
-
-    return isValid;
-    
 }
 
+// JSON.parse(); -> convert from string to array/object
+// JSON.stringify(); -> convert from array/object to string
+// localStorage.removeItem('tasks');
 
-
-//Calculating the tipAmt, totalAmt, personAmt
-function performCalcs(inputBill,inputUser,select){
-
-    let tipAmt = document.getElementById("tip-amount");
-    let totalAmt = document.getElementById("total-amount");
-    let personAmt = document.getElementById("person-amount");
-    
-    if (select.value === 1) {
-        tipPercentage = 0.2;
-    } else if (select.value === 2) {
-        tipPercentage = 0.1;
+// get saved items from the localStorage
+function handleLocalStorageFetch() {
+    let tasks = [];
+    if(!localStorage.getItem('tasks')) {
+        return tasks;
     } else {
-        tipPercentage = 0.02;
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+        return tasks;
     }
-
-
-    tipAmt = Number(inputBill) * tipPercentage;
-    totalAmt = Number(inputBill) +  Number(tipAmt);
-    personAmt = Number(totalAmt) / Number(inputUser);
-
-    return result = [tipAmt, totalAmt, personAmt];
-   
 }
-// console.log(tipAmt);
-    
+// Add new item to the localStorage
+function handleLocalStorageAdd(task) {
+    if (!localStorage.getItem('tasks')) {
+        const arr = [];
+        arr.push({task: task.task})
+        localStorage.setItem('tasks', JSON.stringify(arr));
+    } else {
+        let allTasks = JSON.parse(localStorage.getItem('tasks'));
+        allTasks.push({task: task.task});
+        localStorage.setItem('tasks', JSON.stringify(allTasks));
+    }
+}
 
-form.addEventListener("submit", displayOutput);
+function handleLocalStorageDelete(task) {
+    let arr = JSON.parse(localStorage.getItem('tasks'));
 
+    arr.forEach((item, index) => {
+        if(item.task === task) {
+            arr.splice(index, 1);
+        }
+    });
 
-function displayOutput(e) {
+    localStorage.setItem('tasks', JSON.stringify(arr));
+}
+
+//Creating an array to store my list items
+function displayItems() {
+    const arrItems = handleLocalStorageFetch();
+
+    arrItems.forEach((item) => {
+        ourTasks(item);
+    });
+}
+
+// create task item
+function ourTasks(item) {
+    items.insertAdjacentHTML("beforeend", `<div class="item my-3"><h5 class="item-name text-capitalize">${item.task}</h5><div class="item-icons"><a href="#" class="complete-item mx-2 item-icon"><i class="far fa-check-circle"></i></a><a href="#" class="edit-item mx-2 item-icon"><i class="far fa-edit"></i></a><a href="#" class="delete-item item-icon"><i class="far fa-times-circle"></i></a></div></div>`) 
+}
+
+// run when the DOM loads completely
+document.addEventListener('DOMContentLoaded', displayItems);
+
+// handle form submit
+addItem.addEventListener("submit", (e) =>{
     e.preventDefault();
 
-    let inputBill = document.getElementById("input-bill");
-    let inputUser = document.getElementById("input-users");
+    let itemInput = document.getElementById("itemInput");
+    //Creating a feedback to ensure input of a value
+    let feedback = document.querySelector(".feedback");
+    
+    //Validating an input is there
+    if(itemInput.value == ""){
+        feedback.style.display = "block";
 
-    let isValid = validateInputs(inputBill.value, inputUser.value, select.value);
+        setTimeout(closeError, 2000);
+        function closeError(){
+            feedback.style.display = "none";
+        }
+    }else{
+        // make the new task item into an object
+        let newTask = new Task(itemInput.value)
+        // now create new task
+        ourTasks(newTask);
+        // add new task to localStorage
+        handleLocalStorageAdd(newTask);
 
-    if (isValid) {
-        result = performCalcs(inputBill.value, inputUser.value, select.value);
-        loader.style.display = "block";
+        itemInput.value = "";
     }
-    setTimeout(showResults, 2000);
+});
 
-    function showResults() {
-        loader.style.display = "none";
+// handle delete, edit and complete functions
+items.addEventListener('click', (e) => {
 
-        //Populate the result elements
-        tipAmt.textContent = result[0];
-        totalAmt.textContent = result[1];
-        personAmt.textContent = result[2];
-
-        resultsContainer.style.display = "block";
-
+    // handle delete function
+    if(e.target.classList.contains("fa-times-circle")) {
+        let itemName = e.target.parentElement.parentElement.previousElementSibling.textContent;
+        e.target.parentElement.parentElement.parentElement.remove();
+        handleLocalStorageDelete(itemName);
     }
 
-    setTimeout(clearResults, 10000);
-
-    function clearResults() {
-        // then close the results
-        resultsContainer.style.display = "none";
-
-        // and clear the values in the input fields
-        inputBill.value = "";
-        inputUser.value = "";
-        select.selectedIndex = "0"; // this returns the selected value to the initial value
+    // handle edit function
+    if(e.target.classList.contains("fa-edit")) {
+        // get text of the item to edit
+        let itemName = e.target.parentElement.parentElement.previousElementSibling.textContent;
+        // set the value of new input tag to text above
+        document.querySelector('#itemInput').value = itemName;
+        // delete the current task
+        e.target.parentElement.parentElement.parentElement.remove();
     }
 
+    // handle complete function
+    if(e.target.classList.contains("fa-check-circle")) {
+        // toggle: inserts and removes the specified item from the classList
+        e.target.parentElement.parentElement.parentElement.classList.toggle('completed');
+    }
+});
 
-}
-
-
-
-
+clearList.addEventListener("click", () => {
+    items.innerHTML = "";
+    localStorage.removeItem('tasks');
+});
