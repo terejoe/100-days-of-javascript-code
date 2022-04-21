@@ -1,128 +1,88 @@
-//Gathering values to populate my list
-// let itemInput = document.getElementById("itemInput").value;
-let addItem = document.getElementById("itemForm");
-let items = document.getElementById("items");
-let clearList = document.getElementById("clear-list");
+//Button to open and close modal
+let cartInfo = document.getElementById("cart-info");
 
-// task item class
-class Task {
-    constructor(task) {
-        this.task = task;
-    }
+//Modal pop up box
+let cart = document.getElementById("cart");
+
+cartInfo.addEventListener("click", toggleModal);
+
+function toggleModal(){
+    cart.classList.toggle("show-cart");
 }
 
-// JSON.parse(); -> convert from string to array/object
-// JSON.stringify(); -> convert from array/object to string
-// localStorage.removeItem('tasks');
+//Targeting an item to display the alert window
+let shopCarts= document.querySelectorAll(".fa-shopping-cart");
+// console.log(shopCarts);
 
-// get saved items from the localStorage
-function handleLocalStorageFetch() {
-    let tasks = [];
-    if(!localStorage.getItem('tasks')) {
-        return tasks;
-    } else {
-        tasks = JSON.parse(localStorage.getItem('tasks'));
-        return tasks;
-    }
-}
-// Add new item to the localStorage
-function handleLocalStorageAdd(task) {
-    if (!localStorage.getItem('tasks')) {
-        const arr = [];
-        arr.push({task: task.task})
-        localStorage.setItem('tasks', JSON.stringify(arr));
-    } else {
-        let allTasks = JSON.parse(localStorage.getItem('tasks'));
-        allTasks.push({task: task.task});
-        localStorage.setItem('tasks', JSON.stringify(allTasks));
-    }
-}
+shopCarts.forEach((shopCart) => {
+    shopCart.addEventListener("click", (event) =>{
+        alert("Item has been added to cart");
+        // console.log("Item has been added to cart");
+        // console.log(event.target);
 
-function handleLocalStorageDelete(task) {
-    let arr = JSON.parse(localStorage.getItem('tasks'));
+        if (event.target.parentElement.classList.contains("store-item-icon")){
+            let fullPath = event.target.parentElement.previousElementSibling.src;
+            
+            let postn = fullPath.indexOf("img") + 3;
+            let partPath = fullPath.slice(postn);
+            // console.log(partPath);
 
-    arr.forEach((item, index) => {
-        if(item.task === task) {
-            arr.splice(index, 1);
+
+            const item = {};
+            item.img = `https://raw.githubusercontent.com/JS-Beginners/grocery-cart-project/main/img-cart${partPath}`;
+            // console.log(item); 
+
+            item.name = event.target.parentElement.parentElement.nextElementSibling.children[0].children[0].textContent;
+
+            let price = event.target.parentElement.parentElement.nextElementSibling.children[0].children[1].textContent;
+            let finalPrice = price.slice(1).trim();
+            item.price = finalPrice;
+
+            const cartItem = document.createElement("div");
+            cartItem.classList.add("cart-item", "d-flex", "justify-content-between","text-capitalize", "my-3");
+
+            cartItem.innerHTML = `<img src="${item.img}" class="img-fluid rounded-circle" id="item-img" alt="">
+            <div class="item-text">
+              <p id="cart-item-title" class="font-weight-bold mb-0">${item.name}</p>
+              <span>$</span>
+              <span id="cart-item-price" class="cart-item-price" class="mb-0">${item.price}</span>
+            </div>
+            <a href="#" id='cart-item-remove' class="cart-item-remove">
+              <i class="fas fa-trash"></i>
+            </a>`
+
+            const cart = document.getElementById("cart");
+            const total = document.querySelector(".cart-total-container");
+
+            cart.insertBefore(cartItem, total);
+            showTotal();
         }
-    });
+      function showTotal() {
+        const total = [];
+        const items = document.querySelectorAll(".cart-item-price");
 
-    localStorage.setItem('tasks', JSON.stringify(arr));
-}
+        items.forEach((item) => {
+          total.push(parseFloat(item.textContent));
+        });
 
-//Creating an array to store my list items
-function displayItems() {
-    const arrItems = handleLocalStorageFetch();
+        console.log(total);
+        
+        const totalMoney = total.reduce(myFunc);
 
-    arrItems.forEach((item) => {
-        ourTasks(item);
-    });
-}
-
-// create task item
-function ourTasks(item) {
-    items.insertAdjacentHTML("beforeend", `<div class="item my-3"><h5 class="item-name text-capitalize">${item.task}</h5><div class="item-icons"><a href="#" class="complete-item mx-2 item-icon"><i class="far fa-check-circle"></i></a><a href="#" class="edit-item mx-2 item-icon"><i class="far fa-edit"></i></a><a href="#" class="delete-item item-icon"><i class="far fa-times-circle"></i></a></div></div>`) 
-}
-
-// run when the DOM loads completely
-document.addEventListener('DOMContentLoaded', displayItems);
-
-// handle form submit
-addItem.addEventListener("submit", (e) =>{
-    e.preventDefault();
-
-    let itemInput = document.getElementById("itemInput");
-    //Creating a feedback to ensure input of a value
-    let feedback = document.querySelector(".feedback");
-    
-    //Validating an input is there
-    if(itemInput.value == ""){
-        feedback.style.display = "block";
-
-        setTimeout(closeError, 2000);
-        function closeError(){
-            feedback.style.display = "none";
+        function myFunc(result,item){
+          return result += item;
         }
-    }else{
-        // make the new task item into an object
-        let newTask = new Task(itemInput.value)
-        // now create new task
-        ourTasks(newTask);
-        // add new task to localStorage
-        handleLocalStorageAdd(newTask);
+        let finalMoney = totalMoney.toFixed(2);
+        console.log(finalMoney);
 
-        itemInput.value = "";
-    }
+        document.getElementById("cart-total").textContent = finalMoney;
+        document.querySelector(".item-total").textContent = finalMoney;
+        document.getElementById("item-count").textContent = total.length;
+
+
+      }
+    })
 });
 
-// handle delete, edit and complete functions
-items.addEventListener('click', (e) => {
 
-    // handle delete function
-    if(e.target.classList.contains("fa-times-circle")) {
-        let itemName = e.target.parentElement.parentElement.previousElementSibling.textContent;
-        e.target.parentElement.parentElement.parentElement.remove();
-        handleLocalStorageDelete(itemName);
-    }
 
-    // handle edit function
-    if(e.target.classList.contains("fa-edit")) {
-        // get text of the item to edit
-        let itemName = e.target.parentElement.parentElement.previousElementSibling.textContent;
-        // set the value of new input tag to text above
-        document.querySelector('#itemInput').value = itemName;
-        // delete the current task
-        e.target.parentElement.parentElement.parentElement.remove();
-    }
-
-    // handle complete function
-    if(e.target.classList.contains("fa-check-circle")) {
-        // toggle: inserts and removes the specified item from the classList
-        e.target.parentElement.parentElement.parentElement.classList.toggle('completed');
-    }
-});
-
-clearList.addEventListener("click", () => {
-    items.innerHTML = "";
-    localStorage.removeItem('tasks');
-});
