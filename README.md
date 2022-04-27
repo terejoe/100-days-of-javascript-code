@@ -1,3 +1,3 @@
 # 100-days-of-javascript-code
-Day-13
-Grocery Cart Project
+Day-14
+Grocery List Project
