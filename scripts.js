@@ -1,148 +1,104 @@
-//Adding an item to a cart
-let item = document.querySelector(".items");
-let feedback = document.getElementById("feedback");
-let greenFeedback = document.getElementById("green-feedback");
-let blueFeedback = document.getElementById("blue-feedback");
-let addItem = document.getElementById("inForm");
-
-
-//Declaring my array
-const myArray = ["Javascript","Python", "Java", "MySql", "C#", "Ruby"];
-
-document.addEventListener('DOMContentLoaded', populateItems);
-
-function populateItems() {
-  let array = getItemsFromLocalStorage();
-
-  array.forEach(element => {
-    createElement(element.value);
-  });
+class Book {
+  constructor(name, course, author, img) {
+    this.name = name;
+    this.course = course;
+    this.author = author;
+    this.img = img;
+  }
 }
 
-addItem.addEventListener("submit", (e) => {
-  e.preventDefault();
-  let input = document.getElementById("item");
-  if (input.value == ""){
-    feedback.style.display = "block";
-    setTimeout (closeError,2000);
+let formControls = document.querySelectorAll(".form-control");
+let submitBtn = document.querySelector(".btn");
 
-    function closeError(){
-      feedback.style.display = "none";
-    }
-  }else if(!myArray.includes(input.value)){
-    blueFeedback.style.display = "block";
-    setTimeout(closeError, 2000);
 
-    function closeError() {
-      blueFeedback.style.display = "none";
+// submitBtn.disabled = false;
+
+formControls.forEach(formControl => {
+  formControl.addEventListener("blur", () => {
+    if(formControl.value === ""){
+      formControl.classList.add("fail");
+      formControl.classList.remove("complete");
+    }else{
+      formControl.classList.add("complete");
+      formControl.classList.remove("fail");
     }
+    validate()
+  });
+}); 
+
+function validate(){
+  
+  if ((formControls[0].classList.contains("complete")) && (formControls[1].classList.contains("complete")) && (formControls[2].classList.contains("complete"))) {
+    submitBtn.disabled = false;
   }else{
-    greenFeedback.style.display = "block"
-    setTimeout(closeError,2000);
-    
-    createElement(input.value);
-
-    let objValue = { value: input.value };
-    addToLocalStorage(objValue);
-
-    input.value = '';
-
-    function closeError() {
-      greenFeedback.style.display = "none";
-    }
+    submitBtn.disabled= true;
   }
+}
+
+//Adding the values of the input into the course form with an image
+function imgReload(){
+  let num = Math.floor(Math.random() * 6);
+  let img = `img/cust-${num}.jpg`;
+  return img;
+}
+
+function clearFields() {
+  formControls[0].value = "";
+  formControls[1].value = "";
+  formControls[2].value = "";
+}
+
+
+let load = document.querySelector(".loading");
+let feedback = document.querySelector(".feedback");
+submitBtn.addEventListener("click", (e) =>{
+  e.preventDefault();
+  load.style.display = "block";
+  feedback.style.display = "block";
+
+  setTimeout(() => {
+    load.style.display = "none";
+    feedback.style.display = "none";
+
+    runTemplate(book);
+
+    clearFields();
+
+  }, 2000);
+
+  let nameInput = formControls[0].value;
+  let courseInput = formControls[1].value;
+  let authorInput = formControls[2].value;
+  imgInput = imgReload();
+
+  const book = new Book(nameInput, courseInput, authorInput, imgInput);
   
 })
 
-//Deleting one item
-let items = document.querySelector(".items");
-//Handling one item
-items.addEventListener("click", (e) =>{
-  if(e.target.classList.contains("fa-trash")){
-    var newText = e.target.previousElementSibling.textContent;
-    
-    removeFromLocalStorage(newText);
-    e.target.parentElement.remove();
-  }
-});
+function runTemplate(book) {
 
-//Clearing the whole items
-let clearAll = document.getElementById("clear-all");
-clearAll.addEventListener("click", () =>{
-  items.innerHTML = "";
-  clearLocalStorage();
-});
-
-// create item on UI
-function createElement(value) {
-  let html = `<div class="d-flex justify-content-between form-control border border-dark my-3 py-2 align-items-center">
-              <p class="h6">${value}</p>
-              <i class="fa fa-trash" aria-hidden="true" style="color: #be1010;"></i>
-            </div>`
-  item.insertAdjacentHTML("beforeend", html)
+  let newElement = document.createElement("div");
+  newElement.classList.add("col-11", "mx-auto", "col-md-6", "col-lg-4", "my-3");
+  newElement.innerHTML = `<div class="card text-left">
+                  <img src="${book.img}" class="card-img-top" alt="">
+                  <div class="card-body">
+                    <!-- customer name -->
+                    <h6 class="text-capitalize "><span class="badge bg-warning mr-2">name :</span><span id="customer-name">
+                        ${book.name}</span></h6>
+                    <!-- end of customer name -->
+                    <!-- customer name -->
+                    <h6 class="text-capitalize my-3"><span class="badge bg-success mr-2">course :</span><span
+                        id="customer-course">
+                        ${book.course}
+                      </span></h6>
+                    <!-- end of customer name -->
+                    <!-- customer name -->
+                    <h6 class="text-capitalize"><span class="badge bg-danger mr-2">author :</span><span id="course-author">
+                        ${book.author}</span></h6>
+                    <!-- end of customer name -->
+                  </div>
+                </div>
+                <!-- single customer -->
+                `
+  document.querySelector(".customer-list").appendChild(newElement);
 }
-
-//Local Storage
-/** things to note:
- * only strings can be saved in localStorage.
- * to place an item in the localStorage, a key and a value are to be provided. both are to be string values.
- * to place an object or array into the localStorage, it has to be converted into a string first.
- * to convert an object or array into a string, you make use of "JSON.stringify()" javascript in-built method
- * localStorage values persist in the browser.
- * 
- * to get an item from the localStorage, you make use of ".getItem" method.
- * to convert an object or array that was stored in the localStorage as a string back to its original form, -
- * you make use of the "JSON.parse()" javascript in-built method.
- * 
- * to remove a specific item from the localStorage, you use the ".removeItem()" method.
- * the removeItem method takes in one arguement which is the key of the value to be removed as a string.
- * 
- * to remove everything from localStorage, the ".clear()" method is used.
- */
-
-// items = [
-//   {name: 'name'},
-//   {name: 'you'},
-//   {name: 'me'},
-//   { name: 'they' }
-// ];
-
-// item = {name: 'they'};
-
-function getItemsFromLocalStorage() {
-  // getItem
-  let items = [];
-
-  if (localStorage.getItem("items")) {
-    items = JSON.parse(localStorage.getItem("items"));
-  }
-
-  return items;
-}
-
-function addToLocalStorage(item) {
-  // setItem
-  let arr = getItemsFromLocalStorage();
-  arr.push(item);
-  console.log(arr);
-
-  localStorage.setItem('items', JSON.stringify(arr));
-}
-
-function removeFromLocalStorage(item) {
-  let arr = getItemsFromLocalStorage();
-
-  arr.forEach((element, i) => {
-    if (element.value === item) {
-      arr.splice(i, 1);
-    }
-  });
-
-  localStorage.setItem('items', JSON.stringify(arr));
-}
-
-function clearLocalStorage() {
-  // clear
-  localStorage.clear();
-}
-

@@ -15,35 +15,79 @@
 
   <body>
      
-    <div class="container-md d-flex flex-column w-50 p-3" style="text-align: center;">
-        <p class="h2 my-5">GROCERY LIST</p>
-        <div class="alert alert-danger" role="alert" id = "feedback">
-          Item is not on the list.
-        </div>
-        <div class="alert alert-success" role="alert" id = green-feedback>
-          Item has been added to cart.
-        </div>
-        <div class="alert alert-primary" id = "blue-feedback" role="alert">
-          Please, check your array.
-        </div>
-        <form class="section ps-2 d-flex justify-content-start" id="inForm">
-          <input type="text" name="item" id="item" class="form-control border border-primary d-inline w-75" placeholder="Enter value..." >
-          <button type="submit" style="border: none; background: none; outline: none;">
-            <i class="fas fa-pen-square fa-3x mx-2" id="add-item" style="color: #3131ff;"></i>
-          </button>
-        </form>
-        <section class="container-fluid">
-          <div class="items">
-            <!-- <div class="d-flex justify-content-between form-control border border-dark my-3 py-2 align-items-center">
-              <p class="h6">JavaScript</p>
-              <i class="fa fa-trash" aria-hidden="true" style="color: #be1010;"></i>
-            </div> -->
+    <div class="container">
+      <div class="row">
+        <div class="col-11 mx-auto text-center my-5">
+          <form class="my-5" id="customer-form">
+            <h3 class="text-capitalize">get a free course</h3>
+            <div class="feedback text-center  text-capitalize">
+              calculating.....
+            </div>
+            <!-- single input -->
+            <div class="input-group my-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <input type="text" class="form-control text-capitalize name" id="name" placeholder="customer name">
+            </div>
+            <!-- end of single input -->
+            <!-- single input -->
+            <div class="input-group my-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-book"></i></span>
+              </div>
+              <input type="text" class="form-control text-capitalize course" placeholder="course" id="course">
+            </div>
+            <!-- end of single input -->
+            <!-- single input -->
+            <div class="input-group my-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+              </div>
+              <input type="text" class="form-control text-capitalize author" placeholder="author" id="author">
+            </div>
+            <!-- end of single input -->
+            <button type="submit" class="btn btn-block submitBtn text-uppercase mt-4" disabled>submit</button>
+          </form>
+    
+          <div class="loading">
+            <img src="https://raw.githubusercontent.com/JS-Beginners/course-form-oop-project/main/img/loading.gif" alt="">
           </div>
-          <button class="btn btn-outline-danger mt-2" style="width: 20rem;" id = "clear-all">Clear</button>
-        </section>
+          
+          <div class="row customer-list">
+    
+            <!-- single customer -->
+            <div class="col-11 mx-auto col-md-6 col-lg-4 my-3">
+              <div class="card text-left">
+                <img src="img/cust-0.jpg" class="card-img-top" alt="">
+                <div class="card-body">
+                  <!-- customer name -->
+                  <h6 class="text-capitalize "><span class="badge bg-warning mr-2">name :</span><span id="customer-name">
+                      john anderson</span></h6>
+                  <!-- end of customer name -->
+                  <!-- customer name -->
+                  <h6 class="text-capitalize my-3"><span class="badge bg-success mr-2">course :</span><span
+                      id="customer-course">
+                      css basics
+                    </span></h6>
+                  <!-- end of customer name -->
+                  <!-- customer name -->
+                  <h6 class="text-capitalize"><span class="badge bg-danger mr-2">author :</span><span id="course-author">
+                      john anderson</span></h6>
+                  <!-- end of customer name -->
+                </div>
+              </div>
+    
+              <!-- single customer -->
+    
+    
+    
+            </div>
+    
+          </div>
+        </div>
+      </div>
     </div>
-
-
     <!-- Optional JavaScript; choose one of the two! -->
     <script src = "scripts.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
