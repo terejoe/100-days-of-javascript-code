@@ -14,80 +14,56 @@
   </head>
 
   <body>
-     
     <div class="container">
       <div class="row">
-        <div class="col-11 mx-auto text-center my-5">
-          <form class="my-5" id="customer-form">
-            <h3 class="text-capitalize">get a free course</h3>
-            <div class="feedback text-center  text-capitalize">
-              calculating.....
+        <div class="col-11 col-lg-6 my-3">
+          <h3 class="text-capitalize">flashcards</h3>
+          <button class="btn text-capitalize my-2 show-btn" id="show-btn">add question</button>
+          <div class="card card-body my-3 question-card">
+            <!-- close btn -->
+            <a href="#" class="close-btn mt-0">
+              <i class="fas fa-window-close"></i>
+            </a>
+            <!-- end of close btn -->
+            <div class="feedback alert alert-danger w-75 text-capitalize">
+              cannot add empty values
             </div>
-            <!-- single input -->
-            <div class="input-group my-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            <form id="question-form">
+              <!-- single input -->
+              <h5 class="text-capitalize">question</h5>
+              <div class="form-group">
+                <textarea class="w-100" id="question-input" rows="3"></textarea>
               </div>
-              <input type="text" class="form-control text-capitalize name" id="name" placeholder="customer name">
-            </div>
-            <!-- end of single input -->
-            <!-- single input -->
-            <div class="input-group my-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-book"></i></span>
+              <!-- end of single input -->
+              <!-- single input -->
+              <h5 class="text-capitalize">answer</h5>
+              <div class="form-group">
+                <textarea class="w-100" id="answer-input" rows="3"></textarea>
               </div>
-              <input type="text" class="form-control text-capitalize course" placeholder="course" id="course">
-            </div>
-            <!-- end of single input -->
-            <!-- single input -->
-            <div class="input-group my-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-              </div>
-              <input type="text" class="form-control text-capitalize author" placeholder="author" id="author">
-            </div>
-            <!-- end of single input -->
-            <button type="submit" class="btn btn-block submitBtn text-uppercase mt-4" disabled>submit</button>
-          </form>
-    
-          <div class="loading">
-            <img src="https://raw.githubusercontent.com/JS-Beginners/course-form-oop-project/main/img/loading.gif" alt="">
-          </div>
-          
-          <div class="row customer-list">
-    
-            <!-- single customer -->
-            <div class="col-11 mx-auto col-md-6 col-lg-4 my-3">
-              <div class="card text-left">
-                <img src="img/cust-0.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                  <!-- customer name -->
-                  <h6 class="text-capitalize "><span class="badge bg-warning mr-2">name :</span><span id="customer-name">
-                      john anderson</span></h6>
-                  <!-- end of customer name -->
-                  <!-- customer name -->
-                  <h6 class="text-capitalize my-3"><span class="badge bg-success mr-2">course :</span><span
-                      id="customer-course">
-                      css basics
-                    </span></h6>
-                  <!-- end of customer name -->
-                  <!-- customer name -->
-                  <h6 class="text-capitalize"><span class="badge bg-danger mr-2">author :</span><span id="course-author">
-                      john anderson</span></h6>
-                  <!-- end of customer name -->
-                </div>
-              </div>
-    
-              <!-- single customer -->
-    
-    
-    
-            </div>
-    
+              <!-- end of single input -->
+              <button type="submit" class="btn submitBtn text-capitalize w-50">save</button>
+            </form>
           </div>
         </div>
       </div>
+    
+      <div class="row px-2" id="questions-list">
+        <!-- <div class="col-md-4"> -->
+        <!--Template for card data-->
+        <!-- <div class="card card-body flashcard my-3">
+         <h4 class="text-capitalize">question title?</h4>
+         <a href="#" class="text-capitalize my-3 show-answer">show/hide answer</a>
+         <h5 class="answer mb-3">question answer</h5>
+         <div class="flashcard-btn d-flex justify-content-between">
+          <a href="#" id="edit-flashcard" class=" btn my-1 edit-flashcard text-uppercase" data-id="">edit</a>
+          <a href="#" id="delete-flashcard" class=" btn my-1 delete-flashcard text-uppercase">delete</a>
+         </div> -->
+      </div>
     </div>
+    
+    </div>
+    </div>
+
     <!-- Optional JavaScript; choose one of the two! -->
     <script src = "scripts.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->

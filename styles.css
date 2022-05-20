@@ -1,55 +1,93 @@
 :root {
-    --mainWhite: #f7f9f9;
-    --mainBrown: #a76d60;
-    --darkBrown: #601700;
+    --mainWhite: #f5f5f5;
+    --mainDark: #333333;
+    --mainOrange: #ff8552;
+    --mainGreen: #297373;
 }
 
 body {
     background: var(--mainWhite);
+    color: var(--mainDark);
 }
 
-.input-group-text {
-    background: var(--mainBrown);
-    color: var(--mainWhite);
-    border-color: var(--mainBrown);
+.show-btn {
+    border-color: var(--mainOrange);
+    color: var(--mainOrange);
+    background: transparent;
 }
 
-.form-control {
-    border: 0.2rem solid var(--mainBrown);
+.show-btn:hover {
+    background: var(--mainOrange);
+    color: var(--mainDark);
 }
 
-.submitBtn {
-    color: var(--darkBrown);
-    background: var(--mainWhite);
-    border: 0.2rem solid var(--darkBrown);
-    transition: all 1s ease-in-out;
-}
-
-.submitBtn:hover {
-    background: var(--darkBrown);
-    color: var(--mainWhite);
-}
-
-.fail {
-    border-color: red;
-}
-
-.complete {
-    border-color: green;
+.question-card {
+    display: none;
+    position: relative;
+    background: transparent;
+    border-color: var(--mainOrange);
 }
 
 .feedback {
     display: none;
 }
 
-.loading {
-    display: none;
+textarea {
+    border-radius: 0.25rem;
+    border-color: var(--mainOrange);
 }
 
-:disabled {
-    opacity: 0.2 !important;
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 2%;
+    font-size: 2rem;
+    color: var(--mainOrange);
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: var(--mainGreen);
+}
+
+.submitBtn {
+    border: 0.2rem solid var(--mainGreen);
+    color: var(--mainGreen);
+    background: transparent;
+}
+
+.submitBtn:hover {
+    background: var(--mainGreen);
+    color: var(--mainWhite);
+}
+
+.edit-flashcard {
+    border: 0.2rem solid var(--mainGreen);
+    color: var(--mainGreen);
+    background: transparent;
+}
+
+.edit-flashcard:hover {
+    background: var(--mainGreen);
+    color: var(--mainDark);
+}
+
+.delete-flashcard {
+    border: 0.2rem solid var(--mainOrange);
+    color: var(--mainOrange);
+    background: transparent;
+}
+
+.delete-flashcard:hover {
+    background: var(--mainOrange);
+    color: var(--mainDark);
+}
+
+.answer {
+    display: none;
 }
 
 .showItem {
     display: block;
 }
+
