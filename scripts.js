@@ -1,136 +1,124 @@
 class Card {
-  constructor(question,answer) {
-    this.question = question;
-    this.answer = answer;
+  constructor(title,price) {
+    this.title = title;
+    this.price = price;
   }
 }
 
-//DOM Populate
-document.addEventListener("DOMContentLoaded", populateItems);
-function populateItems(){
-  let array = getItemsFromLocalStorage();
-  array.forEach(data =>{
-    setupCard(data);
-  })
-}
+//Budget
+let budgetInput = document.getElementById("budget-input");
+let budgetAmt = document.getElementById("budget-amount");
 
-//Opening the flashcard
-let showBtn = document.getElementById("show-btn");
-let showCard = document.querySelector(".question-card");
+let budgetFeedback = document.querySelector(".budget-feedback");
+let budgetSubmit = document.getElementById("budget-submit");
 
-showBtn.addEventListener("click", () =>{
-  showCard.style.display = "block";
-})
+budgetSubmit.addEventListener("click", (e) =>{
+  e.preventDefault();
+  if(budgetInput.value == ""){
+    budgetFeedback.style.display = "block";
 
-//Closing the flashcard
-let closeBtn = document.querySelector(".close-btn");
-closeBtn.addEventListener("click", () =>{
-  showCard.style.display = "none";
-})
-
-//Displaying the feedback
-let submitBtn = document.querySelector(".submitBtn");
-
-submitBtn.addEventListener("click", (e)=>{
-  let feedback = document.querySelector(".feedback");
-  let questionInput = document.getElementById("question-input");
-  let answerInput = document.getElementById("answer-input");
-  
-  e.preventDefault()
-  if(answerInput.value == "" || questionInput.value == ""){
-    feedback.style.display = "block";
-  
-    setTimeout(() =>{
-      feedback.style.display = "none";
-    }, 2000)
+    setTimeout(() =>{                                           
+      budgetFeedback.style.display = "none";
+    },2000)
   }else{
-    let questionValue = questionInput.value;
-    let answerValue = answerInput.value;
-
-    const card = new Card(questionValue, answerValue);
-
-    setupCard(card);
-    addToLocalStorage(card)
+    budgetAmt.textContent = budgetInput.value;
+    balanceAmt.textContent = budgetInput.value;
   }
-  // console.log(questionInput);
-  // console.log(answerInput);
-  questionInput.value = "";
-  answerInput.value = "";
+  budgetInput.value = "";
+  // console.log(budgetAmt.textContent);
 })
 
-function setupCard(card){
+
+//The expenses and balance money in dollars
+let expenseAmt = document.getElementById("expense-amount");
+let balanceAmt = document.getElementById("balance-amount");
+
+//Expense Title and Amount
+let expenseTitle = document.getElementById("expense-input");
+let expenseInput = document.getElementById("amount-input");
+
+let expenseFeedback = document.querySelector(".expense-feedback")
+let expenseSubmit = document.getElementById("expense-submit");
+
+expenseSubmit.addEventListener("click",(e) =>{
+  e.preventDefault();
+  if (expenseTitle.value == "" || expenseInput.value == "") {
+    expenseFeedback.style.display = "block";
+
+    setTimeout(() =>{                                           
+      expenseFeedback.style.display = "none";  
+    },2000)
+  } else {
+    // console.log(balanceAmt);
+    
+    totalExp = parseInt(expenseInput.value) + parseInt(expenseAmt.textContent); 
+    // console.log(totalExp);
+    expenseAmt.textContent = totalExp;
+
+    let balance = balanceAmt.textContent - expenseInput.value;
+    balanceAmt.textContent = balance;
+    
+    let titleInput = expenseTitle.value;
+    let priceInput = expenseInput.value;
+
+    const card = new Card(titleInput, priceInput)
+    
+    showItem(card);
+  }
+  expenseTitle.value = "";
+  expenseInput.value = "";
+}) 
+
+function showItem(card){
   let newElement = document.createElement("div");
-  newElement.classList.add("col-md-4");
-  newElement.innerHTML = `<div class="card card-body flashcard my-3">
-         <h4 class="text-capitalize">${card.question}</h4>
-         <a href="#" class="text-capitalize my-3 show-answer">show/hide answer</a>
-         <h5 class="answer mb-3">${card.answer}</h5>
-         <div class="flashcard-btn d-flex justify-content-between">
-          <a href="#" id="edit-flashcard" class=" btn my-1 edit-flashcard text-uppercase" data-id="">edit</a>
-          <a href="#" id="delete-flashcard" class=" btn my-1 delete-flashcard text-uppercase">delete</a>
-         </div>`
-  document.querySelector("#questions-list").appendChild(newElement);
+  newElement.classList.add("expense-item", "d-flex", "justify-content-between", "align-items-baseline");
+  newElement.innerHTML = `<h6 class="expense-title mb-0 text-uppercase list-item">${card.title}</h6>
+             <h5 class="expense-amount mb-0 list-item">${card.price}</h5>
+             <div class="expense-icons list-item">
+              <a href="#" class="edit-icon mx-2">
+               <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="delete-icon">
+               <i class="fas fa-trash"></i>
+              </a>
+             </div>`
+  document.querySelector("#exp").appendChild(newElement);
 }
 
-//Displaying and hiding answer
-let showLink = document.querySelector("#questions-list");
+//Deleting and editing part
+let expense = document.getElementById("exp");
+// console.log(expense);
 
-showLink.addEventListener("click", (event) =>{
+expense.addEventListener("click", (event)=>{
   event.preventDefault();
-  let questionInput = document.getElementById("question-input");
-  let answerInput = document.getElementById("answer-input");
-  // let showAnswer = document.querySelector(".answer");
   // console.log(event.target);
-  if (event.target.classList.contains("show-answer")) {
-    if (event.target.nextElementSibling.classList.contains('showItem')) {
-      event.target.nextElementSibling.classList.remove("showItem")
-    } else {
-      event.target.nextElementSibling.classList.add("showItem")
-    }
+  if (event.target.classList.contains("fa-edit")){
+    event.target.parentElement.parentElement.parentElement.remove();
+
+    itemPrice = event.target.parentElement.parentElement.previousElementSibling.textContent;
+    // console.log(itemPrice);
+
+    totalExp = totalExp - itemPrice;
+    expenseAmt.textContent = totalExp;
+    
+    balanceAmt.textContent = parseInt(balanceAmt.textContent) + parseInt(itemPrice);
+
+    expenseTitle.value = event.target.parentElement.parentElement.previousElementSibling.previousElementSibling.textContent;
+    expenseInput.value = event.target.parentElement.parentElement.previousElementSibling.textContent;
   }
 
-  if (event.target.classList.contains("delete-flashcard")) {
+  //Deleting Part
+  if (event.target.classList.contains("fa-trash")) {
     event.target.parentElement.parentElement.parentElement.remove();
-    let item = event.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent
-    removeFromLocalStorage(item);
-  }
 
-  if (event.target.classList.contains("edit-flashcard")) {
-    event.target.parentElement.parentElement.parentElement.remove();
-    let editText = event.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
-    questionInput.value = editText;
-    answerInput.value = "";
-    let item = event.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent
-    removeFromLocalStorage(item);
+    itemPrice = event.target.parentElement.parentElement.previousElementSibling.textContent;
+
+    totalExp = totalExp - itemPrice;
+    expenseAmt.textContent = totalExp;
+
+    balanceAmt.textContent = parseInt(balanceAmt.textContent) + parseInt(itemPrice);
   }
+  
 })
 
-//Local storage
 
-//Getting items from the local storage
-function getItemsFromLocalStorage(){
-  let card = [];
-  let cardItems = localStorage.getItem("card");
-  if (cardItems) {
-    card = JSON.parse(localStorage.getItem("card"))
-  }
-  return card;
-}
-
-//Adding the items to the localstorage
-function addToLocalStorage(item) {
-  let arr = getItemsFromLocalStorage()
-  arr.push(item);
-  localStorage.setItem("card", JSON.stringify(arr));
-}
-
-//Removing an item
-function removeFromLocalStorage(item){
-  let arr = getItemsFromLocalStorage();
-  arr.forEach((element, i) => {
-    if (element.question === item) {
-      arr.splice(i,1)
-    }
-  })
-  localStorage.setItem("card", JSON.stringify(arr))
-}

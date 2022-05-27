@@ -1,3 +1,3 @@
 # 100-days-of-javascript-code
-Day-16
-Flashcard Project
+Day-17
+Budgeting App Project
