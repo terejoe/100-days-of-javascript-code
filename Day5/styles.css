@@ -1,0 +1,30 @@
+.max-height {
+  min-height: 100vh;
+}
+:root {
+  --lightBlue: #95b8d1;
+  --mainwhite: #f5f5f5;
+  --mainBlack: #333333;
+}
+
+body {
+  background: var(--lightBlue);
+}
+.message-container {
+  background: var(--mainwhite);
+}
+.message-content {
+  color: var(--lightBlue);
+}
+#submitBtn {
+  background: var(--lightBlue);
+  color: var(--mainwhite);
+}
+#submitBtn:hover {
+  color: var(--lightBlue);
+  color: var(--mainBlack);
+}
+
+.counter{
+  font-size: 150px;
+}
